@@ -1,0 +1,24 @@
+.jumbotron {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 0px;
+}
+
+.city-search {
+    background-color: lightgray;
+    padding: 10px;
+}
+
+.current-weather {
+    padding: 10px;
+}
+
+.city {
+    width: 100%;
+    border: 1px;
+    padding: 10px;
+    color: gray;
+    text-align: left;
+}
