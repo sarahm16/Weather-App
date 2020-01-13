@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="jumbotron">
+        <h2>Weather Dashboard</h2>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 city-search">
+                <h4>Search for a city:</h4>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control new-city" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-info citySearch">
+                            <span class="glyphicon glyphicon-search"></span> Search
+                        </button>
+                    </div>
+                </div>
+                <div class="city-history"></div>
+            </div>
+            <div class="col-lg-8">
+                <div class="current-weather border">
+                    <h3 id="cityName">Atlanta (1/13/2020)</h3>
+                    <p id="temp">Temperature:</p>
+                    <p id="humidity">Humidity:</p>
+                    <p id="wind-speed"></p>
+                    <p id="uv-index"></p>
+                </div>
+
+                <div class="forecast"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
