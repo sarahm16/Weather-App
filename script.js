@@ -34,13 +34,15 @@ function displayWeather() {
         console.log(response.list);
         $('.forecast').empty();
         for(let i=0; i<5; i++) {
-            let results = response.list[i].main;
+            let results = response.list[i];
             let day = $('<div>');
             let date = $('<h4>').text('1/14/20');
-            let forecastTemp = $('<p>').text(results.temp);
-            let forecastHumidity = $('<p>').text(results.humidity);
+            let forecastTemp = $('<p>').text(results.main.temp);
+            let forecastHumidity = $('<p>').text(results.main.humidity);
+            let fIconCode = results.weather[0].icon;
+            let forecastIcon = $('<img>').attr('src', `http://openweathermap.org/img/w/${fIconCode}.png`)
             day.attr("class", "newDay");
-            day.append(date, forecastTemp, forecastHumidity);
+            day.append(date, forecastIcon, forecastTemp, forecastHumidity);
             $('.forecast').append(day);
         }
     })
