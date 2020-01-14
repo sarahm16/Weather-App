@@ -8,10 +8,12 @@ let APIkey = "82dd8f19c8ffad5a953a3d34883fd060";
 //display current weather
 function displayWeather() {
     let selectedCity = $(this).attr('data-name');
-    let queryURL= `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=` + APIkey;
-    //console.log(selectedCity);
+    let currentURL= `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=${APIkey}`;
+    let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${selectedCity}&appid=${APIkey}`;
+    
+    //current weather ajax call
     $.ajax({
-        url: queryURL,
+        url: currentURL,
         method: 'GET'
     }).then(function(response) {
         console.log(response);
@@ -24,6 +26,18 @@ function displayWeather() {
         console.log(iconCode);
         $('#icon').attr('src', `http://openweathermap.org/img/w/${iconCode}.png`);
     })    
+
+    //forecast ajax call
+    $.ajax({
+        url: forecastURL,
+        method: 'GET'
+    }).then(function(response) {
+        console.log(response);
+        for(let i=0; i<5; i++) {
+
+        }
+        let day = $('<div>');
+    })
 }
 
 function displayForecast() {
@@ -43,3 +57,9 @@ $('.citySearch').on('click', function() {
 })
 
 $(document).on("click", ".city", displayWeather);
+
+// for(let i=0; i<cityHistory.length; i++) {
+//     while(cityHistory[i] == '') {
+//         $('.current-weather').style.display = 'none';
+//     }
+// }
