@@ -20,7 +20,14 @@ function displayWeather() {
         $('#humidity').text(`Humidity: ${response.main.humidity}%`);
         $('#wind-speed').text(`Wind Speed: ${response.wind.speed} MPH`);
         //$('#uv-index').text(`UV Index: ${response.}`)
+        let iconCode = response.weather[0].icon;
+        console.log(iconCode);
+        $('#icon').attr('src', `http://openweathermap.org/img/w/${iconCode}.png`);
     })    
+}
+
+function displayForecast() {
+
 }
 
 $('.citySearch').on('click', function() {

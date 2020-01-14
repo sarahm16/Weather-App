@@ -21,3 +21,7 @@
     color: gray;
     text-align: left;
 }
+
+#cityName {
+    float: left;
+}
