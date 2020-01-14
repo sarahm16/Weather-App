@@ -10,7 +10,7 @@ function displayWeather() {
     let selectedCity = $(this).attr('data-name');
     let currentURL= `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=${APIkey}`;
     let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${selectedCity}&appid=${APIkey}`;
-    
+
     //current weather ajax call
     $.ajax({
         url: currentURL,
@@ -24,7 +24,7 @@ function displayWeather() {
         let iconCode = response.weather[0].icon;
         console.log(iconCode);
         $('#icon').attr('src', `http://openweathermap.org/img/w/${iconCode}.png`);
-    })    
+    })
 
     //forecast ajax call
     $.ajax({
@@ -32,6 +32,7 @@ function displayWeather() {
         method: 'GET'
     }).then(function(response) {
         console.log(response.list);
+        $('.forecast').empty();
         for(let i=0; i<5; i++) {
             let results = response.list[i].main;
             let day = $('<div>');
@@ -57,14 +58,9 @@ $('.citySearch').on('click', function() {
     $.each(cityHistory, function(index, city) {
         let cityButton = $('<button class="city border">').text(city);
         cityButton.attr('data-name', city);
-        $('.city-history').append(cityButton);
+        $('.city-history').prepend(cityButton);
     })
 })
 
 $(document).on("click", ".city", displayWeather);
 
-// for(let i=0; i<cityHistory.length; i++) {
-//     while(cityHistory[i] == '') {
-//         $('.current-weather').style.display = 'none';
-//     }
-// }
