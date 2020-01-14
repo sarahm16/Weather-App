@@ -16,7 +16,6 @@ function displayWeather() {
         url: currentURL,
         method: 'GET'
     }).then(function(response) {
-        console.log(response);
         $('#cityName').text(response["name"]);
         $('#temp').text(`Temperature: ${response.main.temp}`);
         $('#humidity').text(`Humidity: ${response.main.humidity}%`);
@@ -32,11 +31,17 @@ function displayWeather() {
         url: forecastURL,
         method: 'GET'
     }).then(function(response) {
-        console.log(response);
+        console.log(response.list);
         for(let i=0; i<5; i++) {
-
+            let results = response.list[i].main;
+            let day = $('<div>');
+            let date = $('<h4>').text('1/14/20');
+            let forecastTemp = $('<p>').text(results.temp);
+            let forecastHumidity = $('<p>').text(results.humidity);
+            day.attr("class", "newDay");
+            day.append(date, forecastTemp, forecastHumidity);
+            $('.forecast').append(day);
         }
-        let day = $('<div>');
     })
 }
 
