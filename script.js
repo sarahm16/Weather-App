@@ -37,8 +37,8 @@ function displayWeather() {
             let results = response.list[i];
             let day = $('<div>');
             let date = $('<h4>').text('1/14/20');
-            let forecastTemp = $('<p>').text(results.main.temp);
-            let forecastHumidity = $('<p>').text(results.main.humidity);
+            let forecastTemp = $('<p>').text(`Temp: ${results.main.temp}`);
+            let forecastHumidity = $('<p>').text(`Humidity: ${results.main.humidity}%`);
             let fIconCode = results.weather[0].icon;
             let forecastIcon = $('<img>').attr('src', `http://openweathermap.org/img/w/${fIconCode}.png`)
             day.attr("class", "newDay");
