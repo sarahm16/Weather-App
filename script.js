@@ -1,22 +1,22 @@
 
-let cityHistory = [];
+//let cityHistory = [];
 
 //let forecast = [date+1, date+2, date+3, date+4, date+5];
 
 let APIkey = "82dd8f19c8ffad5a953a3d34883fd060";
 
 //display current weather
-function displayWeather() {
-    let selectedCity = $(this).attr('data-name');
+function displayWeather(selectedCity) {
+    //let selectedCity = $(this).attr('data-name');
     let currentURL= `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=${APIkey}`;
     let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${selectedCity}&appid=${APIkey}`;
 
-    //current weather ajax call
+    //current weather ajax call to retrieve current weather JSON object
     $.ajax({
         url: currentURL,
         method: 'GET'
     }).then(function(response) {
-        $('#cityName').text(response["name"]);
+        $('#city-name').text(response["name"]);
         $('#temp').text(`Temperature: ${response.main.temp}`);
         $('#humidity').text(`Humidity: ${response.main.humidity}%`);
         $('#wind-speed').text(`Wind Speed: ${response.wind.speed} MPH`);
@@ -26,7 +26,7 @@ function displayWeather() {
         $('#icon').attr('src', `http://openweathermap.org/img/w/${iconCode}.png`);
     })
 
-    //forecast ajax call
+    //forecast ajax call to retrieve forecast JSON object
     $.ajax({
         url: forecastURL,
         method: 'GET'
@@ -36,7 +36,7 @@ function displayWeather() {
         for(let i=0; i<5; i++) {
             let results = response.list[i];
             let day = $('<div>');
-            let date = $('<h4>').text('1/14/20');
+            let date = $('<h4>').text('1/15/20');
             let forecastTemp = $('<p>').text(`Temp: ${results.main.temp}`);
             let forecastHumidity = $('<p>').text(`Humidity: ${results.main.humidity}%`);
             let fIconCode = results.weather[0].icon;
@@ -48,21 +48,20 @@ function displayWeather() {
     })
 }
 
-function displayForecast() {
-
-}
-
 $('.citySearch').on('click', function() {
-    cityHistory = [];
+    displayWeather($('.new-city').val());
+    let cityHistory = [];
     cityHistory.push($('.new-city').val());
-    //$('#cityName').text($('.new-city').val());
+    $('#city-name').text($('.new-city').val());
 
     $.each(cityHistory, function(index, city) {
         let cityButton = $('<button class="city border">').text(city);
         cityButton.attr('data-name', city);
-        $('.city-history').prepend(cityButton);
+        $('.search-history').prepend(cityButton);
     })
 })
 
-$(document).on("click", ".city", displayWeather);
+$(document).on("click", ".city", function() {
+    displayWeather($(this).attr('data-name'));
+});
 
