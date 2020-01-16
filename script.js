@@ -1,8 +1,4 @@
-
-//let cityHistory = [];
-
-//let forecast = [date+1, date+2, date+3, date+4, date+5];
-
+$('#forecast-title').text('');
 let APIkey = "82dd8f19c8ffad5a953a3d34883fd060";
 
 //display current weather
@@ -33,6 +29,7 @@ function displayWeather(selectedCity) {
     }).then(function(response) {
         console.log(response.list);
         $('.forecast').empty();
+        $('#forecast-title').text('5 Day Forecast:');
         for(let i=0; i<5; i++) {
             let results = response.list[i];
             let day = $('<div>');
