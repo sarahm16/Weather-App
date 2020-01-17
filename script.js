@@ -1,10 +1,14 @@
-$('#forecast-title').text('');
-let APIkey = "82dd8f19c8ffad5a953a3d34883fd060";
-let cityHistory=[''];
-// cityHistory.unshift('Tacoma');
-// cityHistory = JSON.parse(localStorage.getItem('past-cities'));
-// console.log(cityHistory[0]);
+let emptyArray=[];
 
+//set local storage to empty array if it hasn't been set yet
+if(localStorage.getItem('searchHistory') == undefined) {
+    localStorage.setItem('searchHistory', JSON.stringify(emptyArray));
+}
+
+let cityHistory = JSON.parse(localStorage.getItem('searchHistory'));
+console.log(cityHistory);
+
+//display weather of last city searched
 if(cityHistory[0] != undefined) {
     displayWeather(cityHistory[0]);
 }
@@ -63,12 +67,17 @@ function displayWeather(selectedCity) {
 // }
 
 $('.citySearch').on('click', function() {
+    //empty search-history div when new city is searched
     $('.search-history').empty();
+
+    //add new search to beginning of cityHistory array
     cityHistory.unshift($('.new-city').val());
+
     $('#city-name').text($('.new-city').val());
     $('.new-city').val('');
-    localStorage.setItem('searchHistory', cityHistory);
+    localStorage.setItem('searchHistory', JSON.stringify(cityHistory));
 
+    //create a button for each city in cityHistory array, append button to search-history div
     $.each(cityHistory, function(index, city) {
         let cityButton = $('<button class="city border">').text(city);
         cityButton.attr('data-name', city);
