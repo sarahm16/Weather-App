@@ -1,9 +1,17 @@
 $('#forecast-title').text('');
 let APIkey = "82dd8f19c8ffad5a953a3d34883fd060";
+let cityHistory =[];
+console.log(cityHistory[0]);
+// cityHistory.unshift('Tacoma');
+// cityHistory = JSON.parse(localStorage.getItem('past-cities'));
+// console.log(cityHistory[0]);
+
+if(cityHistory[0] != undefined) {
+    displayWeather(cityHistory[0]);
+}
 
 //display current weather
 function displayWeather(selectedCity) {
-    //let selectedCity = $(this).attr('data-name');
     let currentURL= `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=${APIkey}`;
     let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${selectedCity}&appid=${APIkey}`;
 
@@ -12,14 +20,14 @@ function displayWeather(selectedCity) {
         url: currentURL,
         method: 'GET'
     }).then(function(response) {
+        let lat = 0;
         $('#city-name').text(response["name"]);
         $('#temp').text(`Temperature: ${response.main.temp}`);
         $('#humidity').text(`Humidity: ${response.main.humidity}%`);
         $('#wind-speed').text(`Wind Speed: ${response.wind.speed} MPH`);
-        //$('#uv-index').text(`UV Index: ${response.}`)
         let iconCode = response.weather[0].icon;
-        console.log(iconCode);
         $('#icon').attr('src', `http://openweathermap.org/img/w/${iconCode}.png`);
+        //displayUV();
     })
 
     //forecast ajax call to retrieve forecast JSON object
@@ -27,10 +35,9 @@ function displayWeather(selectedCity) {
         url: forecastURL,
         method: 'GET'
     }).then(function(response) {
-        console.log(response.list);
         $('.forecast').empty();
         $('#forecast-title').text('5 Day Forecast:');
-        for(let i=0; i<5; i++) {
+        for(let i=3; i<40; i=i+8) {
             let results = response.list[i];
             let day = $('<div>');
             let date = $('<h4>').text('1/15/20');
@@ -45,20 +52,34 @@ function displayWeather(selectedCity) {
     })
 }
 
+// function displayUV(selectedCity) {
+//     console.log(response);
+//     // $.ajax ({
+//     //     url: `http://api.openweathermap.org/data/2.5/uvi/forecast?appid=${APIkey}&lat=${lat}&lon=${lon}`,
+//     //     method: 'GET'
+//     // }).then(function(response) {
+
+//     // })
+//     // $('#uv-index').text(`UV Index: 5`);
+// }
+
 $('.citySearch').on('click', function() {
-    displayWeather($('.new-city').val());
-    let cityHistory = [];
-    cityHistory.push($('.new-city').val());
+    $('.search-history').empty();
+    cityHistory.unshift($('.new-city').val());
     $('#city-name').text($('.new-city').val());
+    $('.new-city').val("");
+    console.log(cityHistory);
 
     $.each(cityHistory, function(index, city) {
         let cityButton = $('<button class="city border">').text(city);
         cityButton.attr('data-name', city);
         $('.search-history').prepend(cityButton);
     })
+    displayWeather(cityHistory[0]);
 })
 
 $(document).on("click", ".city", function() {
-    displayWeather($(this).attr('data-name'));
+    cityHistory.unshift($(this).attr('data-name'));
+    displayWeather(cityHistory[0]);
 });
 
