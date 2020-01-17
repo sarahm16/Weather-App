@@ -1,7 +1,6 @@
 $('#forecast-title').text('');
 let APIkey = "82dd8f19c8ffad5a953a3d34883fd060";
-let cityHistory =[];
-console.log(cityHistory[0]);
+let cityHistory=[''];
 // cityHistory.unshift('Tacoma');
 // cityHistory = JSON.parse(localStorage.getItem('past-cities'));
 // console.log(cityHistory[0]);
@@ -68,6 +67,7 @@ $('.citySearch').on('click', function() {
     cityHistory.unshift($('.new-city').val());
     $('#city-name').text($('.new-city').val());
     $('.new-city').val('');
+    localStorage.setItem('searchHistory', cityHistory);
 
     $.each(cityHistory, function(index, city) {
         let cityButton = $('<button class="city border">').text(city);
