@@ -67,8 +67,7 @@ $('.citySearch').on('click', function() {
     $('.search-history').empty();
     cityHistory.unshift($('.new-city').val());
     $('#city-name').text($('.new-city').val());
-    $('.new-city').val("");
-    console.log(cityHistory);
+    $('.new-city').val('');
 
     $.each(cityHistory, function(index, city) {
         let cityButton = $('<button class="city border">').text(city);
