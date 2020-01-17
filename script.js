@@ -1,4 +1,5 @@
 let emptyArray=[];
+let APIkey = "82dd8f19c8ffad5a953a3d34883fd060";
 
 //set local storage to empty array if it hasn't been set yet
 if(localStorage.getItem('searchHistory') == undefined) {
@@ -66,6 +67,7 @@ function displayWeather(selectedCity) {
 //     // $('#uv-index').text(`UV Index: 5`);
 // }
 
+//click event for search button
 $('.citySearch').on('click', function() {
     //empty search-history div when new city is searched
     $('.search-history').empty();
@@ -73,19 +75,22 @@ $('.citySearch').on('click', function() {
     //add new search to beginning of cityHistory array
     cityHistory.unshift($('.new-city').val());
 
-    $('#city-name').text($('.new-city').val());
+    //empty search bar
     $('.new-city').val('');
+
+    //set local storage to new array
     localStorage.setItem('searchHistory', JSON.stringify(cityHistory));
 
-    //create a button for each city in cityHistory array, append button to search-history div
+    //create a button for each city in cityHistory array, prepend button to search-history div
     $.each(cityHistory, function(index, city) {
         let cityButton = $('<button class="city border">').text(city);
         cityButton.attr('data-name', city);
-        $('.search-history').prepend(cityButton);
+        $('.search-history').append(cityButton);
     })
     displayWeather(cityHistory[0]);
 })
 
+//when user selects city button from search history, prepend this city to cityHistory array
 $(document).on("click", ".city", function() {
     cityHistory.unshift($(this).attr('data-name'));
     displayWeather(cityHistory[0]);
