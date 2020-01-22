@@ -1,6 +1,8 @@
 let emptyArray=[];
 let APIkey = "82dd8f19c8ffad5a953a3d34883fd060";
 
+let m = moment().format('MM/DD/YY');
+
 //set local storage to empty array if it hasn't been set yet
 if(localStorage.getItem('searchHistory') == undefined) {
     localStorage.setItem('searchHistory', JSON.stringify(emptyArray));
@@ -24,14 +26,17 @@ function displayWeather(selectedCity) {
         url: currentURL,
         method: 'GET'
     }).then(function(response) {
-        let lat = 0;
-        $('#city-name').text(response["name"]);
+        console.log(response);
+        let lat = response.coord.lat;
+        let lon = response.coord.lon;
+        console.log(lat);
+        $('#city-name').text(response["name"] + ` (${m})`);
         $('#temp').text(`Temperature: ${response.main.temp}`);
         $('#humidity').text(`Humidity: ${response.main.humidity}%`);
         $('#wind-speed').text(`Wind Speed: ${response.wind.speed} MPH`);
         let iconCode = response.weather[0].icon;
         $('#icon').attr('src', `http://openweathermap.org/img/w/${iconCode}.png`);
-        //displayUV();
+        displayUV(lat, lon);
     })
 
     //forecast ajax call to retrieve forecast JSON object
@@ -43,8 +48,9 @@ function displayWeather(selectedCity) {
         $('#forecast-title').text('5 Day Forecast:');
         for(let i=3; i<40; i=i+8) {
             let results = response.list[i];
+            //console.log(results);
             let day = $('<div>');
-            let date = $('<h4>').text('1/15/20');
+            let date = $('<h4>').text(m);
             let forecastTemp = $('<p>').text(`Temp: ${results.main.temp}`);
             let forecastHumidity = $('<p>').text(`Humidity: ${results.main.humidity}%`);
             let fIconCode = results.weather[0].icon;
@@ -56,16 +62,15 @@ function displayWeather(selectedCity) {
     })
 }
 
-// function displayUV(selectedCity) {
-//     console.log(response);
-//     // $.ajax ({
-//     //     url: `http://api.openweathermap.org/data/2.5/uvi/forecast?appid=${APIkey}&lat=${lat}&lon=${lon}`,
-//     //     method: 'GET'
-//     // }).then(function(response) {
-
-//     // })
-//     // $('#uv-index').text(`UV Index: 5`);
-// }
+function displayUV(lat, lon) {
+    $.ajax ({
+        url: `http://api.openweathermap.org/data/2.5/uvi/forecast?appid=${APIkey}&lat=${lat}&lon=${lon}`,
+        method: 'GET'
+    }).then(function(response) {
+        console.log(response);
+        $('#uv-index').text(`UV index: ${response[0].value}`);
+    })
+}
 
 //click event for search button
 $('.citySearch').on('click', function() {
