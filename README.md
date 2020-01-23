@@ -8,3 +8,6 @@ When the user refreshes the app, weather data from the most recent city searched
 <br>
 
 Three different AJAX alls and URLs are used from open weather API. One AJAX call returns current weather for selected city, another AJAX call returns 5 day forecast, and another AJAX call returns the UV index for the selected city based on the latitude and longitude retrieved from the first AJAX call. All returns are in the form of a JSON object.
+<br>
+
+<img src ="./home.png" alt="home-page">
