@@ -11,5 +11,6 @@ Three different AJAX alls and URLs are used from open weather API. One AJAX call
 <br>
 
 <img src ="./images/home.png" alt="home-page">
+<img src="./images/history.png" alt="search-history">
 
 <a href="https://sarahm16.github.io/Weather-App/">Link to Weather App</a>
