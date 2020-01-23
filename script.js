@@ -50,7 +50,7 @@ function displayWeather(selectedCity) {
             let results = response.list[i];
             //console.log(results);
             let day = $('<div>');
-            let date = $('<h4>').text(m);
+            let date = $('<h4>').text(moment().add(i/8, 'days').format('l'));
             let forecastTemp = $('<p>').text(`Temp: ${results.main.temp}`);
             let forecastHumidity = $('<p>').text(`Humidity: ${results.main.humidity}%`);
             let fIconCode = results.weather[0].icon;
